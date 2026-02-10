@@ -1,0 +1,31 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    wget \
+    xz-utils \
+    libxi6 \
+    libxxf86vm1 \
+    libxfixes3 \
+    libxrender1 \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxkbcommon0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Blender 4.0.2 설치
+ARG BLENDER_VERSION=4.0.2
+ARG BLENDER_URL=https://download.blender.org/release/Blender4.0/blender-4.0.2-linux-x64.tar.xz
+
+RUN wget -q "${BLENDER_URL}" -O /tmp/blender.tar.xz \
+    && mkdir -p /opt/blender \
+    && tar -xf /tmp/blender.tar.xz -C /opt/blender --strip-components=1 \
+    && rm /tmp/blender.tar.xz \
+    && ln -s /opt/blender/blender /usr/local/bin/blender
+
+WORKDIR /workspace
+
+ENTRYPOINT ["blender", "--background"]
