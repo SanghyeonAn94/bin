@@ -169,8 +169,8 @@ stop_containers() {
     done
 
     if [ "$DRY_RUN" = false ]; then
-        log "  [$user] $runtime stop --all (timeout 30s)..."
-        $run_cmd stop --all -t 30 2>/dev/null || true
+        log "  [$user] $runtime stop --all (timeout 60s)..."
+        timeout 60 $run_cmd stop --all -t 30 2>/dev/null || true
         sleep 2
         local remaining
         remaining=$($run_cmd ps -q 2>/dev/null | wc -l)
@@ -197,7 +197,7 @@ if command -v docker &>/dev/null; then
             log "    $line"
         done
         if [ "$DRY_RUN" = false ]; then
-            docker stop $(docker ps -q) 2>/dev/null || true
+            timeout 60 docker stop $(docker ps -q) 2>/dev/null || true
             log "${GREEN}  Docker 컨테이너 종료 완료${NC}"
         fi
     else
