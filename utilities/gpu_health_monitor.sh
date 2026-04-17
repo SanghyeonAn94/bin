@@ -14,7 +14,7 @@ THRESHOLD_MEM_TEMP=85 # GPU memory (HBM temperature)
 # THRESHOLD_MEM_TEMP=60 # GPU memory (HBM temperature)
 
 # Inlet Temperature Thresholds
-THRESHOLD_INLET_TEMP=35
+THRESHOLD_INLET_TEMP=28
 THRESHOLD_HGX_INLET_TEMP=40
 
 # GPU Temperature Violation Tracking (consecutive violations trigger process kill)
